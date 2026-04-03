@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aegis Sentinel | Zero-Trust Architecture</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="dashboard-container">
+    <header>
+      <div class="brand">
+        <div class="brand-icon"></div>
+        <div class="brand-text">AEGIS SENTINEL</div>
+      </div>
+      <div id="auth-btn" class="auth-badge">
+        <div id="auth-dot" class="status-dot"></div>
+        <span id="auth-text">Not Authenticated</span>
+      </div>
+    </header>
+
+    <div class="main-content">
+      <div class="sidebar">
+        <div class="nav-item active" data-tab="dashboard">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+          Dashboard
+        </div>
+        <div class="nav-item" data-tab="posture">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19C19.985 19 22 16.985 22 14.5C22 12.148 20.218 10.222 17.9 10.02C17.41 6.64 14.5 4 11 4C7.134 4 4 7.134 4 11C2.343 11.23 1 12.722 1 14.5C1 16.433 2.567 18 4.5 18"/></svg>
+          Cloud Posture
+        </div>
+        <div class="nav-item" data-tab="vault">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Auth0 Token Vault
+        </div>
+        <div class="nav-item" data-tab="logs">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+          Agent Logs
+        </div>
+      </div>
+
+      <div class="workspace">
+        
+        <!-- DASHBOARD VIEW -->
+        <div id="view-dashboard" class="view-panel active">
+          <div class="hero-header">
+            <div>
+              <h1 class="hero-title">Continuous Security Auditor</h1>
+              <p class="hero-subtitle">Agentic detection powered by Gemini. Managed by Auth0 Token Vault.</p>
+            </div>
+            <button id="scan-btn" class="btn-primary">Initiate Deep Scan</button>
+          </div>
+
+          <div id="alert-container" class="alert-container">
+            <div class="alert-card">
+              <div class="alert-header">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <span id="alert-title">Critical Vulnerability Detected</span>
+              </div>
+              <div class="alert-body-grid">
+                <div class="alert-box">
+                  <div class="box-label">Root Cause Analysis</div>
+                  <div class="box-content" id="alert-analysis">Awaiting scan...</div>
+                </div>
+                <div class="alert-box">
+                  <div class="box-label">Agent Proposed Remediation</div>
+                  <div class="box-content" id="alert-action">None.</div>
+                </div>
+              </div>
+              <div style="display:flex; justify-content: flex-end;">
+                <button id="fix-btn" class="btn-danger">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  Grant Agent Access (Step-Up Auth)
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="terminal" id="dashboard-terminal">
+            <div class="terminal-header">
+              <div class="mac-btn mac-r"></div>
+              <div class="mac-btn mac-y"></div>
+              <div class="mac-btn mac-g"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- POSTURE VIEW -->
+        <div id="view-posture" class="view-panel">
+          <div class="empty-state">
+            <div class="empty-icon">☁️</div>
+            <h2>Cloud Posture Map</h2>
+            <p>Visualizing 1 AWS Account and 23 connected resources.</p>
+            <p style="font-size: 0.8rem; opacity: 0.5; margin-top: 20px;">(Topology visualization requires Premium tier)</p>
+          </div>
+        </div>
+
+        <!-- VAULT VIEW -->
+        <div id="view-vault" class="view-panel">
+          <div class="hero-header">
+            <div>
+              <h1 class="hero-title">Token Vault Access Policies</h1>
+              <p class="hero-subtitle">Explicit boundaries for the Gemini AI Agent.</p>
+            </div>
+          </div>
+          <div class="policy-list">
+            <div class="policy-item">
+              <div>
+                <strong style="color:white; display:block; margin-bottom:5px;">GitHub / Vercel</strong>
+                <span style="color:var(--text-secondary); font-size:0.85rem;">Bound to user identity via Auth0. Requires explicit Action Approval.</span>
+              </div>
+              <span class="policy-badge">SECURE</span>
+            </div>
+            <div class="policy-item">
+              <div>
+                <strong style="color:white; display:block; margin-bottom:5px;">AWS IAM Policies</strong>
+                <span style="color:var(--text-secondary); font-size:0.85rem;">Step-Up Auth required for ALL mutating actions.</span>
+              </div>
+              <span class="policy-badge">SECURE</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- LOGS VIEW -->
+        <div id="view-logs" class="view-panel">
+          <div class="terminal" id="main-terminal" style="height: 100%;">
+            <div class="terminal-header">
+              <div class="mac-btn mac-r"></div>
+              <div class="mac-btn mac-y"></div>
+              <div class="mac-btn mac-g"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
