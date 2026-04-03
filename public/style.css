@@ -369,3 +369,99 @@ header {
   font-size: 0.75rem;
   font-weight: 600;
 }
+
+/* TOPOLOGY GRAPH UI */
+.topology-container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: inset 0 0 40px rgba(0,0,0,0.5);
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+.topology-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.topology-lines .line {
+  fill: none;
+  stroke: rgba(56, 189, 248, 0.2);
+  stroke-width: 2;
+  stroke-dasharray: 4 4;
+  animation: dash 20s linear infinite;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: -1000;
+  }
+}
+
+.topo-node {
+  position: absolute;
+  background: rgba(15, 15, 15, 0.9);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  border-radius: 8px;
+  padding: 10px 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 100px;
+  z-index: 10;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  transition: box-shadow 0.2s; /* Removed transform transition so dragging is smooth */
+  cursor: grab;
+}
+
+.topo-node:active {
+  cursor: grabbing;
+}
+
+.topo-node:hover {
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+}
+
+.topo-node.warning-node {
+  border-color: rgba(239, 68, 68, 0.6);
+  animation: node-pulse 2s infinite;
+}
+
+@keyframes node-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+  70% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+.node-icon {
+  font-size: 1.5rem;
+  margin-bottom: 5px;
+}
+
+.node-badge {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--accent-green);
+  font-size: 0.65rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-top: 5px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.node-badge.error {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--accent-red);
+}

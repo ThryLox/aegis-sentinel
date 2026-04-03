@@ -139,3 +139,79 @@ fixBtn.addEventListener('click', async () => {
 
 // Initialize
 setTimeout(checkAuth, 1000);
+
+// --- DRAGGABLE TOPOLOGY LOGIC ---
+const topoNodes = document.querySelectorAll('.topo-node');
+const topoContainer = document.getElementById('topo-container');
+
+// Map lines to nodes for dynamic redrawing
+const lineConnections = [
+  { lineId: 'line-web-waf', startNode: 'node-web', endNode: 'node-waf' },
+  { lineId: 'line-waf-eks', startNode: 'node-waf', endNode: 'node-eks' },
+  { lineId: 'line-waf-s3', startNode: 'node-waf', endNode: 'node-s3' },
+  { lineId: 'line-s3-iam', startNode: 'node-s3', endNode: 'node-iam' }
+];
+
+let activeNode = null;
+let offsetX = 0;
+let offsetY = 0;
+
+function updateLines() {
+  lineConnections.forEach(conn => {
+    const start = document.getElementById(conn.startNode);
+    const end = document.getElementById(conn.endNode);
+    const line = document.getElementById(conn.lineId);
+    
+    if (start && end && line) {
+      // Parse coordinates (removing 'px')
+      const sx = parseInt(start.style.left, 10);
+      const sy = parseInt(start.style.top, 10);
+      const ex = parseInt(end.style.left, 10);
+      const ey = parseInt(end.style.top, 10);
+      
+      line.setAttribute('d', `M ${sx} ${sy} L ${ex} ${ey}`);
+    }
+  });
+}
+
+topoNodes.forEach(node => {
+  node.addEventListener('mousedown', (e) => {
+    activeNode = node;
+    const rect = topoContainer.getBoundingClientRect();
+    
+    // Parse current pos or use 0
+    const currentLeft = parseInt(node.style.left || 0, 10);
+    const currentTop = parseInt(node.style.top || 0, 10);
+    
+    // Calculate offset relative to the mouse pointer
+    offsetX = e.clientX - rect.left - currentLeft;
+    offsetY = e.clientY - rect.top - currentTop;
+    
+    node.style.cursor = 'grabbing';
+    e.preventDefault(); // Prevent text selection
+  });
+});
+
+document.addEventListener('mousemove', (e) => {
+  if (!activeNode) return;
+  
+  const rect = topoContainer.getBoundingClientRect();
+  let newLeft = e.clientX - rect.left - offsetX;
+  let newTop = e.clientY - rect.top - offsetY;
+  
+  // Basic bounds checking
+  newLeft = Math.max(0, Math.min(newLeft, rect.width));
+  newTop = Math.max(0, Math.min(newTop, rect.height));
+  
+  activeNode.style.left = `${newLeft}px`;
+  activeNode.style.top = `${newTop}px`;
+  
+  updateLines();
+});
+
+document.addEventListener('mouseup', () => {
+  if (activeNode) {
+    activeNode.style.cursor = 'grab';
+    activeNode = null;
+  }
+});

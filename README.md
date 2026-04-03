@@ -52,6 +52,18 @@ sequenceDiagram
     Cloud Environment-->>User: Security Remediation Confirmed
 ```
 
+## 🧠 Hackathon Architectural Decisions
+
+### Why simulate the AWS Environment?
+For this hackathon, we intentionally **mocked the AWS vulnerability targets** (like an exposed S3 bucket or overly permissive IAM roles). Spinning up live vulnerable AWS infrastructure is costly, legally precarious, and distracts from the core goal of the "Authorized to Act" prompt. 
+
+Mute execution is counter-intuitive for demonstrations, so we designed a hybrid approach:
+1. The **vulnerability detection** is dynamically simulated.
+2. The **Auth0 Token Vault Integration** is exactly per specification.
+3. As **proof of real-world execution**, the agent uses the vaulted credentials to execute a *real* GitHub API action. Instead of making an invisible AWS API call, the agent permanently writes its audit findings and attributes it to the Auth0 session user directly into the repository!
+
+---
+
 ## 🚀 Features
 - **Dynamic Threat Intelligence**: Ingests cloud vulnerability data and leverages `gemini-2.5-flash` to evaluate blast radius and propose immediate remediation.
 - **Glassmorphic Enterprise Experience**: Crafted purely in vanilla HTML/CSS to prove that highly secure authentication tools don't have to compromise on visual fidelity or premium UI/UX.
