@@ -80,8 +80,6 @@ Mute execution is counter-intuitive for demonstrations, so we designed a hybrid 
 │   ├── index.html       # Single-Page Dashboard
 │   ├── style.css        # Premium Design Tokens
 │   └── app.js           # Frontend Auth & State Management
-├── narrative.txt        # Demo Voiceover Script
-├── .env.example         # Template for security credentials
 └── LICENSE              # MIT Permissive License
 ```
 
