@@ -10,8 +10,11 @@
   <h1>🛡️ Aegis Sentinel</h1>
   <p><b>An Autonomous Cloud Security Auditor with Zero-Trust Permission Boundaries.</b></p>
   
+  [![Aegis Sentinel Dashboard](file:///C:/Users/ekonk/.gemini/antigravity/brain/f302bdae-8764-4bf3-a553-844b7e1e0f4d/aegis_sentinel_dashboard_overview_1775420829781.png)](https://aegis-sentinel.onrender.com)
+
   [![Live Demo](https://img.shields.io/badge/Live_Demo_Environment-Launch_Aegis_Sentinel-%2310b981?style=for-the-badge&logo=vercel)](https://aegis-sentinel.onrender.com)
   <p><i>Live on Render | Built for the "Authorized to Act: Auth0 for AI Agents" Hackathon.</i></p>
+  <p><sub><i>Note: Since this is hosted on a free instance, the first load may take 30-60 seconds to spin up.</i></sub></p>
 </div>
 
 ---
@@ -59,7 +62,7 @@ For this hackathon, we intentionally **mocked the AWS vulnerability targets** (l
 
 Mute execution is counter-intuitive for demonstrations, so we designed a hybrid approach:
 1. The **vulnerability detection** is dynamically simulated.
-2. The **Auth0 Token Vault Integration** is exactly per specification.
+2. The **Auth0 Token Vault Flow** is architecturally mirrored to demonstrate the secure retrieval sequence without beta SDK overhead.
 3. As **proof of real-world execution**, the agent uses the vaulted credentials to execute a *real* GitHub API action. Instead of making an invisible AWS API call, the agent permanently writes its audit findings and attributes it to the Auth0 session user directly into the repository!
 
 ---
@@ -68,6 +71,24 @@ Mute execution is counter-intuitive for demonstrations, so we designed a hybrid 
 - **Dynamic Threat Intelligence**: Ingests cloud vulnerability data and leverages `gemini-2.5-flash` to evaluate blast radius and propose immediate remediation.
 - **Glassmorphic Enterprise Experience**: Crafted purely in vanilla HTML/CSS to prove that highly secure authentication tools don't have to compromise on visual fidelity or premium UI/UX.
 - **Dual-Sync Terminal Auditing**: Real-time visualization of the Agent's internal state machine, logging Step-up authorization sequences for compliance.
+
+## 📂 Project Structure
+
+```text
+├── server.js            # Express Server, Gemini AI & Auth0 Logic
+├── public/              # Glassmorphic UI & Terminal Assets
+│   ├── index.html       # Single-Page Dashboard
+│   ├── style.css        # Premium Design Tokens
+│   └── app.js           # Frontend Auth & State Management
+├── narrative.txt        # Demo Voiceover Script
+├── .env.example         # Template for security credentials
+└── LICENSE              # MIT Permissive License
+```
+
+## 🔍 Key Logic Highlights
+
+- **AI Threat Auditor**: Located in `server.js` (Lines 38 - 79). Uses Gemini 2.5 Flash to dynamically evaluate cloud risks.
+- **Zero-Trust Remediation**: Located in `server.js` (Lines 81 - 159). Orchestrates the **Step-Up Authentication** handshake and Token Vault retrieval.
 
 ## 🛠️ Local Setup & Configuration
 
